@@ -3,6 +3,9 @@
 Juego "SIMON" sobre Raspberry pi pico
 Teno, para el taller PIXEL
 23/11/2023
+El juego consiste en repetir la secuencia de luces pulsando los botones correspondientes.
+En cada ronda, se agrega un led más a la secuencia. El nivel máximo es 20!
+
 
 Entradas:
 
@@ -41,6 +44,7 @@ from machine import Pin, PWM
 from random  import randint
 from utime   import sleep
 
+print ("Inicializando...")
 # Función que inicializa el juego y declara las variables
 def start():
     global level
@@ -53,13 +57,14 @@ def start():
     user_input = 0
     random_sequence = []
     
+    # Aquí se define la cantidad de leds y pulsadores conectados a la raspi
     random_sequence = [randint(0, 11) for _ in range(levels)]
     
     for index in range(len(OUTPUTS)):
         generate_sequence(index, 0.05)
     
     sleep(0.1)
-
+    print ("start")
 
 # Función que genera las secuencias
 def generate_sequence(index, delay):
@@ -77,8 +82,7 @@ def generate_sequence(index, delay):
     
     led.value(False)
     sleep(delay)
-
-
+    
 # Función que genera las secuencias aleatorias
 def generate_random_sequence(level):
     delay_random = 0.35
@@ -86,15 +90,17 @@ def generate_random_sequence(level):
     for pin in range(level + 1):
         index = random_sequence[pin]
         generate_sequence(index, delay_random)
-
+    print("generate_random_sequence")
 
 # Función que verifica las secuencias
 def verify_sequences(index):
+    print("verify_sequence")
     return random_sequence[index] == user_input
-
+    
 
 # Función que se encaraga de ingresar la secuencia del usuario
 def input_sequence():
+    
     global user_input
     
     delay_user = 0.25
@@ -103,7 +109,7 @@ def input_sequence():
         if not button.value():
             user_input = index
             generate_sequence(index, delay_user)
-            
+            print ("input_sequence OK")
             return True
     
     return False
@@ -166,4 +172,5 @@ while True:
         start()
     
     sleep(0.3)
-    
+    print("Nivel: ", level)    
+
