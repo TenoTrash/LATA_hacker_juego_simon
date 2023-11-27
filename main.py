@@ -24,7 +24,7 @@ Entradas:
     
 Salidas:
     
-    - GP25: Led Onboard (futuro buzzer?)
+    - GP15: Buzzer pasivo
     - GP13: Led 1
     - GP14: Led 2
     - GP16: Led 3
@@ -116,7 +116,7 @@ def input_sequence():
         
 
 # Declaración del buzzer que va el led onboard por ahora
-speaker = PWM(Pin(25, Pin.OUT))
+speaker = PWM(Pin(15, Pin.OUT))
 
 # Declaración de las entradas (pulsadores en configuración pull up)
 INPUTS = [
